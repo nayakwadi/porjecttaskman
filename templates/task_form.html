@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Edit' if task else 'New' }} Task - Task Manager{% endblock %}
+{% block content %}
+<h1>{{ 'Edit' if task else 'New' }} Task</h1>
+<form method="post" action="{{ url_for('task_edit', task_id=task.id) if task else url_for('task_new') }}">
+    <div class="form-group">
+        <label for="title">Title *</label>
+        <input type="text" id="title" name="title" value="{{ task.title if task else '' }}" required>
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" name="description" rows="4">{{ task.description if task else '' }}</textarea>
+    </div>
+    <div class="form-group">
+        <label for="status">Status</label>
+        <select id="status" name="status">
+            {% for s in statuses %}
+            <option value="{{ s }}" {% if (task.status if task else default_status) == s %}selected{% endif %}>{{ s }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="assigned_to">Assigned To</label>
+        <select id="assigned_to" name="assigned_to">
+            <option value="">— Unassigned —</option>
+            {% for u in users %}
+            <option value="{{ u.id }}" {% if (task.assigned_to if task else default_assigned_to)|string == u.id|string %}selected{% endif %}>{{ u.username }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a href="{{ url_for('index') }}" class="btn btn-secondary" style="margin-left: 0.5rem;">Cancel</a>
+</form>
+{% endblock %}

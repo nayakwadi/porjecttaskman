@@ -1,0 +1,33 @@
+erDiagram
+    users {
+        int id PK
+        string username UK
+        string password
+        timestamp created_at
+    }
+
+    tasks {
+        int id PK
+        string title
+        string description
+        string status
+        int assigned_to FK
+        int created_by FK
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    taskslog {
+        int id PK
+        int task_id FK
+        string action
+        int changed_by FK
+        timestamp changed_at
+        string old_value
+        string new_value
+    }
+
+    users ||--o{ tasks : "assigned_to"
+    users ||--o{ tasks : "created_by"
+    tasks ||--o{ taskslog : "task_id"
+    users ||--o{ taskslog : "changed_by"

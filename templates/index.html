@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Tasks - Task Manager{% endblock %}
+{% block content %}
+<h1>All Tasks</h1>
+
+<div class="filters">
+    <form method="get" action="{{ url_for('index') }}" style="display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap;">
+        <div>
+            <label for="status">Status:</label>
+            <select id="status" name="status">
+                <option value="">All</option>
+                {% for s in statuses %}
+                <option value="{{ s }}" {% if status_filter == s %}selected{% endif %}>{{ s }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label for="assigned_to">Assigned to:</label>
+            <select id="assigned_to" name="assigned_to">
+                <option value="">All</option>
+                {% for u in users %}
+                <option value="{{ u.id }}" {% if user_filter|string == u.id|string %}selected{% endif %}>{{ u.username }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </form>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Assigned To</th>
+            <th>Created By</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for t in tasks %}
+        <tr>
+            <td><strong>{{ t.title }}</strong>{% if t.description %}<br><small style="color:#666;">{{ t.description[:80] }}{% if t.description|length > 80 %}...{% endif %}</small>{% endif %}</td>
+            <td>{{ t.status }}</td>
+            <td>{{ t.assigned_to_username or '—' }}</td>
+            <td>{{ t.created_by_username or '—' }}</td>
+            <td>
+                <a href="{{ url_for('task_edit', task_id=t.id) }}" class="btn btn-primary btn-sm">Edit</a>
+                <form method="post" action="{{ url_for('task_delete', task_id=t.id) }}" style="display: inline;" onsubmit="return confirm('Delete this task?');">
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="5" style="text-align: center;">No tasks yet. <a href="{{ url_for('task_new') }}">Create one</a>.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
