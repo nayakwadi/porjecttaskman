@@ -78,3 +78,23 @@ All database access uses raw SQL via the `sqlite3` module (no ORM).
 - Passwords are stored in **plain text**
 - No MFA or RBAC
 - Not intended for production use
+
+## ER DB Model Diagram
+
+The database schema is documented in `db-model.mmd` (Mermaid ER diagram).
+
+### How to View the Diagram
+
+- **GitHub/GitLab** – Put the script in a `.md` file and they will render it
+- **Mermaid Live Editor** – [mermaid.live](https://mermaid.live) – paste the script and export as PNG/SVG
+- **VS Code / Cursor** – Use the Mermaid extension and preview the file
+- **Notion, Confluence, etc.** – Use their Mermaid/code-block support to render it
+
+### Legend
+
+| Symbol | Meaning |
+|--------|---------|
+| PK | Primary key |
+| UK | Unique constraint |
+| FK | Foreign key |
+| <code>&#124;&#124;--o{</code> | One-to-many relationship |
