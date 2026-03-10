@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Prompt Engineering Guide for Developers</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --text: #e2e8f0;
+            --muted: #94a3b8;
+            --accent: #38bdf8;
+            --success: #34d399;
+            --warning: #fbbf24;
+            --error: #f87171;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        h1 {
+            color: var(--accent);
+            font-size: 1.75rem;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 0.5rem;
+        }
+        h2 {
+            color: var(--success);
+            font-size: 1.25rem;
+            margin-top: 2rem;
+        }
+        h3 {
+            color: var(--accent);
+            font-size: 1.1rem;
+            margin-top: 1.5rem;
+        }
+        p { margin: 0.75rem 0; }
+        ul, ol { margin: 0.5rem 0; padding-left: 1.5rem; }
+        li { margin: 0.35rem 0; }
+        .highlight {
+            background: rgba(56, 189, 248, 0.15);
+            border-left: 4px solid var(--accent);
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .bad-example {
+            background: rgba(248, 113, 113, 0.12);
+            border-left: 4px solid var(--error);
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .good-example {
+            background: rgba(52, 211, 153, 0.12);
+            border-left: 4px solid var(--success);
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .tip {
+            background: rgba(251, 191, 36, 0.12);
+            border-left: 4px solid var(--warning);
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        code {
+            background: var(--surface);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        .meta { color: var(--muted); font-size: 0.9rem; }
+        table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+        th, td {
+            border: 1px solid var(--muted);
+            padding: 0.5rem 0.75rem;
+            text-align: left;
+        }
+        th { background: var(--surface); color: var(--accent); }
+    </style>
+</head>
+<body>
+    <h1>AI Prompt Engineering Guide for Developers</h1>
+    <p class="meta">Best practices for writing effective prompts when working with AI coding assistants (e.g., Cursor)</p>
+
+    <h2>10 Key Principles</h2>
+    <ol>
+        <li><strong>Ask the right questions</strong> to get the right response</li>
+        <li><strong>Be very specific</strong> – Define requirements, functionalities, output formats, and precise scenarios</li>
+        <li><strong>Break down the application</strong> into modules with specific instructions (libraries, methods, approaches)</li>
+        <li><strong>Provide context</strong>: Who you are, what you're trying to do, desired output format, reference files, and expected outcomes with examples</li>
+        <li><strong>Precision yields better output</strong> – The more precise the prompt, the better the first attempt. Iterate as you make changes</li>
+        <li><strong>Understand tokenization</strong> – Prompts are converted to tokens; LLMs process tokens to generate output</li>
+        <li><strong>Structure your prompts</strong> – Split into sections and be specific in each</li>
+        <li><strong>Iterate and refine</strong> – Continuously improve your prompts</li>
+        <li><strong>Use transcripts</strong> – Generated transcripts can become your main <code>prompts.md</code> file; keep modifying for better outcomes</li>
+        <li><strong>Explore different modes</strong>:
+            <ul>
+                <li><strong>Ask</strong> – e.g., To understand a code block in a specific file</li>
+                <li><strong>Plan</strong> – e.g., Create a step-by-step plan to build application X with requirements ABC and target users expecting XYZ functionalities</li>
+                <li><strong>Agent</strong> – e.g., Generate code based on prompts with or without context/examples</li>
+            </ul>
+        </li>
+    </ol>
+
+    <h2>Examples</h2>
+
+    <h3>Worst Prompt</h3>
+    <div class="bad-example">
+        <strong>Example:</strong> Build a task management application using basic Flask, python, html, SQLite
+    </div>
+    <p><strong>Problem:</strong> This prompt is too broad. It allows the AI excessive creativity and rarely produces a working application. You may end up rewriting prompts until you see valid results.</p>
+
+    <h3>Better Prompt</h3>
+    <div class="good-example">
+        <strong>Example:</strong> Construct a detailed prompt with distinct pieces – each with specific instructions, examples, and suggestions. Include: Context, Objective, Functionalities, Requirements, Application Setup, etc. Refer to <code>cursor_prompts_taskmanager_app.md</code> for reference.
+    </div>
+
+    <h3>Shot Strategies</h3>
+    <div class="highlight">
+        <strong>Avoid Zero Shot prompts</strong> (no examples). Always use <strong>One Shot</strong> or <strong>Multi Shot</strong> examples.
+    </div>
+
+    <p><strong>One Shot example:</strong></p>
+    <blockquote>Write a regular expression that matches valid email addresses. Test it with:
+    <ul>
+        <li>valid@example.com</li>
+        <li>invalid@</li>
+        <li>myusername.com</li>
+        <li>@nodomain.com</li>
+    </ul>
+    </blockquote>
+
+    <p><strong>Few Shot / Multi Shot example:</strong></p>
+    <blockquote>Create a Day-to-day Task Planner application that runs locally. It should have capabilities similar to:
+    <ul>
+        <li>Example 1: Outlook task management</li>
+        <li>Example 2: iPhone Reminders</li>
+        <li>Example 3: Google Calendar</li>
+    </ul>
+    </blockquote>
+
+    <h3>Chain-of-Thought</h3>
+    <div class="tip">
+        Provide hints for a step-by-step reasoning approach in your prompts.
+    </div>
+    <p><strong>Example:</strong> Design a database schema for a task management application. Think through each entity, relationships, and constraints step by step.</p>
+    <p>For larger projects, include necessary project folders/files and reference them in the context.</p>
+
+    <h3>Multiple Outputs</h3>
+    <p>Request multiple outputs and select the best one.</p>
+    <p><strong>Example:</strong> Write a regular expression that validates email addresses. Create 4 examples, evaluate pros and cons of each, and pick the best method for maximum efficiency at scale.</p>
+
+    <h2>Cursor IDE Rules</h2>
+    <div class="highlight">
+        <p><strong>Define standard rules</strong> in Cursor IDE settings at either user level or project level.</p>
+        <p><strong>For team setups:</strong> Use project-level rules so every developer follows org-wide and project-wide standards.</p>
+    </div>
+</body>
+</html>
