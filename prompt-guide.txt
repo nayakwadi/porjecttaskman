@@ -11,6 +11,9 @@
     a. Ask (eg: To undesratnd a code block in a specific file)
     b. Plan (eg:Create a step-by step plan to build an application x with requirements abc and targeted users who expects xyz functionalities)
     c. Agent (eg: Generate Code based on the prompts provided with referring to context or no examples at all)
+11. Refer to Five Pillar Framework mentioned in this file prompt-5-pillars.md
+12. Avoid single line prompts which do not yield expected outcomes and it leads to end less back-and-forth iterations. 
+    Also it might just  work in isolation and conflict during integration
 
 
 
@@ -23,6 +26,8 @@ We cannot expect a working application as an outcome and ultimately we may end u
 
 Better Prompt: Constructing a huge prompt with pieces, each piece has specific instructions/examples/suggestions 
 Context, Objective, Functionalities, Requirements, Application Set up etc. Refer to the file /cursor_prompts_taskmanager_app.md
+
+
 
 Avoid Zero Shot prompts  i.e. Not providing examples
 Always use atleast One shot or Multi shot examples.
